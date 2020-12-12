@@ -2,6 +2,7 @@ package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
 import indi.goldenwater.binditem.module.CheckPermissions;
+import indi.goldenwater.binditem.module.DBOperator;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -9,7 +10,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class BindItemExecutor {
                             Player player = (Player)sender;
                             ItemStack itemStack = player.getItemInHand();
                             if(itemStack.getType() != Material.AIR){
-                                itemStack.addEnchantment(Enchantment.getByName("bind_item"),-1);
+                                bindItem(player.getName(), itemStack);
                             } else {
                                 sender.sendMessage("§c不能绑定空气");
                             }
@@ -60,13 +60,9 @@ public class BindItemExecutor {
                             Player player = (Player)sender;
                             ItemStack itemStack = player.getItemInHand();
                             if(itemStack.getType() != Material.AIR){
-                                ItemMeta itemMeta = itemStack.getItemMeta();
-                                Map<String,Object> data = itemMeta.serialize();
-                                data.forEach((k,v)->{
-                                    sender.sendMessage(k + ":" + v.toString());
-                                });
+                                sender.sendMessage(String.valueOf(itemStack.getEnchantmentLevel(Enchantment.getByName("bind_item"))));
                             } else {
-                                sender.sendMessage("§c不能绑定空气");
+                                sender.sendMessage("§c不能解绑空气");
                             }
 //                            sender.sendMessage("Unfinished.");
                         }
@@ -121,6 +117,10 @@ public class BindItemExecutor {
                 break;
         }
         return false;
+    }
+
+    public static void bindItem(String playerName, ItemStack item){
+        item.addEnchantment(Enchantment.getByName("bind_item"),32768);
     }
 
     public static void sendHelpMessage(CommandSender sender, int helpType){

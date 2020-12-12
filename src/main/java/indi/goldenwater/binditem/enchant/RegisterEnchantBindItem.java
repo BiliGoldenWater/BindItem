@@ -19,7 +19,7 @@ public class RegisterEnchantBindItem {
 
             @Override
             public int getStartLevel() {
-                return Integer.MIN_VALUE;
+                return 0;
             }
 
             @Override
