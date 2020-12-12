@@ -1,0 +1,56 @@
+name: BindItem
+version: ${project.version}
+main: indi.goldenwater.binditem.BindItem
+authors: [ Golden_Water ]
+description: This is a bind plugin for your important items.
+website: https://github.com/BiliGoldenWater/BindItem
+commands:
+  binditem:
+    aliases: ["bi","bind","bd"]
+    usage: "/binditem help"
+permissions:
+  binditem.*:
+    description: "Plugin all permissions."
+    default: op
+    children:
+      binditem.commands.*:
+        description: "Plugin all commands permissions."
+        default: op
+        children:
+          binditem.commands.help:
+            description: "Show help message."
+            default: true
+          binditem.commands.bind.*:
+            description: "Bind all usage permissions."
+            default: op
+            children:
+              binditem.commands.bind.self:
+                description: "Bind the item in hand."
+                default: true
+              binditem.commands.bind.other:
+                description: "Bind the item in hand to other player."
+                default: op
+          binditem.commands.unbind:
+            description: "Unbind the item in hand."
+            default: true
+          binditem.commands.bindonpickup:
+            description: "Sets the item to bind after picking up."
+            default: true
+          binditem.commands.bindonuse:
+            description: "Sets the item to bind after use."
+            default: true
+          binditem.commands.bindonequip:
+            description: "Set the item to bind after equip."
+            default: true
+      binditem.bypass.*:
+        description: "Plugin all bypass permissions."
+        default: op
+        children:
+          binditem.bypass.unbindlimit:
+            description: "Allows players with this permission to unbind items that are not theirs."
+            default: op
+          binditem.bypass.pickuplimit:
+            description: "Allows players with this permission to pick up items that are not theirs."
+            default: op
+
+
