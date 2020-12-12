@@ -2,6 +2,7 @@ package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
 import indi.goldenwater.binditem.module.CheckPermissions;
+import indi.goldenwater.binditem.module.DBOperator;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
