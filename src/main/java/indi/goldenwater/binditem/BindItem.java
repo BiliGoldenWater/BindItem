@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2020. Golden_Water All Right Reserved.
+ * ProjectName: BindItem
+ * FileName: BindItem.java
+ * Author: Golden_Water
+ * LastModified: 2020/12/15 上午12:07
+ *
+ * Commercial use is prohibited without permission.
+ * Author must be noted for use,
+ * The signature must be in a place where everyone using it can easily see it.
+ * Any consequence arising out of the use of the code shall be borne by itself.
+ *
+ * Using or downloading code represents agreement to the protocol.
+ *
+ * 未经允许禁止商业使用。
+ * 使用必须注明作者，
+ * 署名必须在每个使用的人能都简单地看到的地方。
+ * 使用代码造成的任何后果均自行承担。
+ *
+ * 使用或下载代码则代表同意该协议。
+ */
+
 package indi.goldenwater.binditem;
 
 import indi.goldenwater.binditem.command.BindItemExecutor;

@@ -1,11 +1,30 @@
+/*
+ * Copyright (c) 2020. Golden_Water All Right Reserved.
+ * ProjectName: BindItem
+ * FileName: BindItemExecutor.java
+ * Author: Golden_Water
+ * LastModified: 2020/12/15 上午12:07
+ *
+ * Commercial use is prohibited without permission.
+ * Author must be noted for use,
+ * The signature must be in a place where everyone using it can easily see it.
+ * Any consequence arising out of the use of the code shall be borne by itself.
+ *
+ * Using or downloading code represents agreement to the protocol.
+ *
+ * 未经允许禁止商业使用。
+ * 使用必须注明作者，
+ * 署名必须在每个使用的人能都简单地看到的地方。
+ * 使用代码造成的任何后果均自行承担。
+ *
+ * 使用或下载代码则代表同意该协议。
+ */
+
 package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
 import indi.goldenwater.binditem.module.CheckPermissions;
-import indi.goldenwater.binditem.module.DBOperator;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -16,15 +35,12 @@ import java.util.Map;
 
 public class BindItemExecutor {
     public static void registerCommandBindItem(BindItem plugin){
-        plugin.getServer().getPluginCommand("binditem").setExecutor(new CommandExecutor() {
-            @Override
-            public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-                if ((commandSender instanceof Player)){
-                    return executorCommand(commandSender, args);
-                } else {
-                    commandSender.sendMessage("该命令必须由玩家使用.");
-                    return true;
-                }
+        plugin.getServer().getPluginCommand("binditem").setExecutor((commandSender, command, s, args) -> { // CommandSender commandSender, Command command, String s, String[] args
+            if ((commandSender instanceof Player)){
+                return executorCommand(commandSender, args);
+            } else {
+                commandSender.sendMessage("该命令必须由玩家使用.");
+                return true;
             }
         });
     }
