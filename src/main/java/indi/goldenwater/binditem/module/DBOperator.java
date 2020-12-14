@@ -1,9 +1,10 @@
 /*
- * Copyright (c) 2020. Golden_Water All Right Reserved.
+ * Copyright (c) 2020 by Golden_Water. All Right Reserved.
  * ProjectName: BindItem
  * FileName: DBOperator.java
  * Author: Golden_Water
- * LastModified: 2020/12/15 上午12:07
+ * Email: 2439577268@qq.com
+ * LastModified: 2020/12/15 00:31:15
  *
  * Commercial use is prohibited without permission.
  * Author must be noted for use,
