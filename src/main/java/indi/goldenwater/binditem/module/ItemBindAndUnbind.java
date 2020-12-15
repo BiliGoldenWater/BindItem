@@ -109,7 +109,7 @@ public class ItemBindAndUnbind {
         }
     }
 
-    private static boolean bind(String playerName, ItemStack item){
+    public static boolean bind(String playerName, ItemStack item){
         DBOperator database = BindItem.getEnchantLvlDatabase();
 
         int maxBindNum = 0;
@@ -171,7 +171,7 @@ public class ItemBindAndUnbind {
         return (isNoKeywords && isHaveRecord) || isHaveBind;
     }
 
-    private static boolean unbind(int enchantLvl, ItemStack item){
+    public static boolean unbind(int enchantLvl, ItemStack item){
         DBOperator database = BindItem.getEnchantLvlDatabase();
 
         List<String> columns = new ArrayList<>(), values = new ArrayList<>();

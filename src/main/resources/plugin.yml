@@ -52,6 +52,12 @@ permissions:
           binditem.bypass.pickuplimit:
             description: "Allows players with this permission to pick up items that are not theirs."
             default: op
+          binditem.bypass.uselimit:
+            description: "Allows players with this permission to use items that are not theirs."
+            default: op
+          binditem.bypass.movelimit:
+            description: "Allows players with this permission to move items in inventory that are not theirs."
+            default: op
           binditem.bypass.unsetlimit:
             description: "Allows players with this permission to unset a item like bind on pickup."
             default: op
