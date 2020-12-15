@@ -26,6 +26,7 @@ package indi.goldenwater.binditem;
 import indi.goldenwater.binditem.command.BindItemExecutor;
 import indi.goldenwater.binditem.enchant.RegisterEnchantBindItem;
 import indi.goldenwater.binditem.module.DBOperator;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -38,14 +39,17 @@ public final class BindItem extends JavaPlugin {
     private static boolean useUUID;
     private static DBOperator enchantLvlDatabase;
     private static String pluginPath;
+    private static Configuration config;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
         useUUID = getServer().getOnlineMode();
-        pluginPath = ".\\"+getServer().getPluginManager().getPlugin("BindItem").getDataFolder().getPath()+"\\";
+        pluginPath = ".\\"+getDataFolder().getPath()+"\\";
         saveDefaultConfig();
+        config = getConfig();
+
         enchantLvlDatabase = new DBOperator(pluginPath + "data.db");
 
 //        getServer().getPluginManager().registerEvents(,this);
@@ -93,12 +97,18 @@ public final class BindItem extends JavaPlugin {
             }
         }
 
-        List<Object> noBindEnchant = enchantLvlDatabase.select("enchantData", "enchantLvl", "bindNum<=0", 1).get(1);
-        noBindEnchant.forEach((value)->{
-            if((int)value>9){
-                enchantLvlDatabase.delete("enchantData", "enchantLvl="+value);
-            }
-        });
+        if(getConfig().getBoolean("removeNonBindPlayerOnStartUp")) {
+            List<Object> noBindEnchant = enchantLvlDatabase.select("enchantData", "enchantLvl", "bindNum<=0", 1).get(1);
+            noBindEnchant.forEach((value) -> {
+                if ((int) value > 9) {
+                    enchantLvlDatabase.delete("enchantData", "enchantLvl=" + value);
+                }
+            });
+        }
+    }
+
+    public static Configuration getPluginConfig(){
+        return config;
     }
 
     public static BindItem getInstance(){

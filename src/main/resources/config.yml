@@ -1,0 +1,2 @@
+# 在启动时从记录里移除所有以绑定物品数为0的玩家记录
+removeNonBindPlayerOnStartUp: true
