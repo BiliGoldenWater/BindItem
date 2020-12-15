@@ -25,14 +25,18 @@ package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
 import indi.goldenwater.binditem.module.CheckPermissions;
+import indi.goldenwater.binditem.module.ItemBindAndUnbind;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.bukkit.Bukkit.*;
 
 public class BindItemExecutor {
     public static void registerCommandBindItem(BindItem plugin){
@@ -63,25 +67,26 @@ public class BindItemExecutor {
                     case "bind":
                         if(CheckPermissions.hasPermission_Tips(sender,"binditem.commands.bind.self")){
                             Player player = (Player)sender;
-                            ItemStack itemStack = player.getItemInHand();
-                            if(itemStack.getType() != Material.AIR){
-                                bindItem(player.getName(), itemStack);
+                            ItemStack item = player.getItemInHand();
+                            if(item.getType() != Material.AIR){
+                                ItemBindAndUnbind.bindItem(player, item);
+//                                System.out.println(Arrays.toString(ItemBindAndUnbind.bindType(item).toArray()));
                             } else {
                                 sender.sendMessage("§c不能绑定空气");
                             }
-//                            sender.sendMessage("Unfinished.");
                         }
                         return true;
                     case "unbind":
                         if(CheckPermissions.hasPermission_Tips(sender,"binditem.commands.unbind")){
                             Player player = (Player)sender;
-                            ItemStack itemStack = player.getItemInHand();
-                            if(itemStack.getType() != Material.AIR){
-                                sender.sendMessage(String.valueOf(itemStack.getEnchantmentLevel(Enchantment.getByName("bind_item"))));
+                            ItemStack item = player.getItemInHand();
+                            if(item.getType() != Material.AIR){
+//                                sender.sendMessage(String.valueOf(item.getEnchantmentLevel(Enchantment.getByName("bind_item"))));
+                                ItemBindAndUnbind.unBindItem(player, item);
+//                                sender.sendMessage(String.valueOf(item.getEnchantmentLevel(Enchantment.getByName("bind_item"))));
                             } else {
                                 sender.sendMessage("§c不能解绑空气");
                             }
-//                            sender.sendMessage("Unfinished.");
                         }
                         return true;
                     case "bindonpickup":
@@ -127,17 +132,32 @@ public class BindItemExecutor {
                         break;
                     case "bind":
                         if(CheckPermissions.hasPermission_Tips(sender,"binditem.commands.bind.other")){
-                            sender.sendMessage("Unfinished.");
+                            Player player = null;
+                            for (Player i : getServer().getOnlinePlayers()){
+                                if (i.getName().equals(args[1])){
+                                    player = i;
+                                    break;
+                                }
+                            }
+
+                            if (player==null){
+                                sender.sendMessage("§c玩家不在线.");
+                                return true;
+                            }
+
+                            ItemStack item = ((Player) sender).getItemInHand();
+                            if(item.getType() != Material.AIR){
+                                ItemBindAndUnbind.bindItem(player, item);
+//                                System.out.println(Arrays.toString(ItemBindAndUnbind.bindType(item).toArray()));
+                            } else {
+                                sender.sendMessage("§c不能绑定空气.");
+                            }
                         }
                         return true;
                 }
                 break;
         }
         return false;
-    }
-
-    public static void bindItem(String playerName, ItemStack item){
-        item.addEnchantment(Enchantment.getByName("bind_item"),32768);
     }
 
     public static void sendHelpMessage(CommandSender sender, int helpType){

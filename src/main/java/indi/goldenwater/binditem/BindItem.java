@@ -40,6 +40,7 @@ public final class BindItem extends JavaPlugin {
     private static DBOperator enchantLvlDatabase;
     private static String pluginPath;
     private static Configuration config;
+    private static String tableName;
 
     @Override
     public void onEnable() {
@@ -49,6 +50,7 @@ public final class BindItem extends JavaPlugin {
         pluginPath = ".\\"+getDataFolder().getPath()+"\\";
         saveDefaultConfig();
         config = getConfig();
+        tableName = "enchantData";
 
         enchantLvlDatabase = new DBOperator(pluginPath + "data.db");
 
@@ -73,7 +75,7 @@ public final class BindItem extends JavaPlugin {
         tableStyle.put("enchantLvl", "int");
         tableStyle.put("playerName", "text");
         tableStyle.put("bindNum", "int");
-        enchantLvlDatabase.createTable("enchantData", tableStyle);
+        enchantLvlDatabase.createTable(tableName, tableStyle);
 
         List<String> columns = new ArrayList<>(), values = new ArrayList<>();
         columns.add("enchantLvl");
@@ -81,27 +83,27 @@ public final class BindItem extends JavaPlugin {
         columns.add("bindNum");
 
         Map<Integer, String> preSettings = new HashMap<>();
-        preSettings.put(0, "\"bindonpickup\"");
-        preSettings.put(1, "\"bindonuse\"");
-        preSettings.put(2, "\"bindonequip\"");
-        preSettings.put(3, "\"none\"");
-        for(int i = 0;i<=9;i++){
+        preSettings.put(1, "\"bindonpickup\"");
+        preSettings.put(2, "\"bindonuse\"");
+        preSettings.put(3, "\"bindonequip\"");
+        preSettings.put(4, "\"none\"");
+        for(int i = 1;i<=10;i++){
             values.clear();
             values.add(String.valueOf(i));
-            values.add(preSettings.get(Math.min(i, 3)));
+            values.add(preSettings.get(Math.min(i, 4)));
             values.add("0");
-            if(enchantLvlDatabase.select("enchantData", "enchantLvl", "enchantLvl=" + i, 1).get(1).size()>0){
-                enchantLvlDatabase.update("enchantData", columns, values, "enchantLvl=" + i);
+            if(enchantLvlDatabase.select(tableName, "enchantLvl", "enchantLvl=" + i, 1).get(1).size()>0){
+                enchantLvlDatabase.update(tableName, columns, values, "enchantLvl=" + i);
             } else {
-                enchantLvlDatabase.insert("enchantData", columns, values);
+                enchantLvlDatabase.insert(tableName, columns, values);
             }
         }
 
         if(getConfig().getBoolean("removeNonBindPlayerOnStartUp")) {
-            List<Object> noBindEnchant = enchantLvlDatabase.select("enchantData", "enchantLvl", "bindNum<=0", 1).get(1);
+            List<Object> noBindEnchant = enchantLvlDatabase.select(tableName, "enchantLvl", "bindNum<=0", 1).get(1);
             noBindEnchant.forEach((value) -> {
-                if ((int) value > 9) {
-                    enchantLvlDatabase.delete("enchantData", "enchantLvl=" + value);
+                if ((int) value > 10) {
+                    enchantLvlDatabase.delete(tableName, "enchantLvl=" + value);
                 }
             });
         }
@@ -125,5 +127,9 @@ public final class BindItem extends JavaPlugin {
 
     public static String getPluginPath(){
         return pluginPath;
+    }
+
+    public static String getTableName(){
+        return tableName;
     }
 }
