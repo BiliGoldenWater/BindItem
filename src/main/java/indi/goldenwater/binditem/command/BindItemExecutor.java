@@ -24,15 +24,11 @@
 package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
-import indi.goldenwater.binditem.listener.OnItemEvents;
 import indi.goldenwater.binditem.module.CheckPermissions;
 import indi.goldenwater.binditem.module.ItemBindAndUnbind;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;

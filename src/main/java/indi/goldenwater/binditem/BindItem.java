@@ -25,9 +25,11 @@ package indi.goldenwater.binditem;
 
 import indi.goldenwater.binditem.command.BindItemExecutor;
 import indi.goldenwater.binditem.enchant.RegisterEnchantBindItem;
+import indi.goldenwater.binditem.listener.OnDeathAndRespawnEvents;
 import indi.goldenwater.binditem.listener.OnItemEvents;
 import indi.goldenwater.binditem.module.DBOperator;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public final class BindItem extends JavaPlugin {
     private static String pluginPath;
     private static Configuration config;
     private static String tableName;
+    public static Map<String, List<ItemStack>> deathPlayersItems = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -56,6 +59,9 @@ public final class BindItem extends JavaPlugin {
         enchantLvlDatabase = new DBOperator(pluginPath + "data.db");
 
         getServer().getPluginManager().registerEvents(new OnItemEvents(), this);
+        if(config.getBoolean("takeOverDeathDrop")){
+            getServer().getPluginManager().registerEvents(new OnDeathAndRespawnEvents(), this);
+        }
 
         getLogger().info("init database.");
         initEnchantLvlDatabase(enchantLvlDatabase);

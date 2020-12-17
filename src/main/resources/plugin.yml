@@ -14,7 +14,7 @@ permissions:
     default: op
     children:
       binditem.commands.*:
-        description: "Plugin all commands permissions."
+        description: "Plugin all permissions about commands."
         default: op
         children:
           binditem.commands.help:
@@ -46,7 +46,7 @@ permissions:
             description: "Reload plugin configuration."
             default: op
       binditem.bypass.*:
-        description: "Plugin all bypass permissions."
+        description: "Plugin all permissions about bypass."
         default: op
         children:
           binditem.bypass.unbindlimit:
@@ -67,5 +67,12 @@ permissions:
           binditem.bypass.unsetlimit:
             description: "Allows players with this permission to unset a item like bind on pickup."
             default: op
+      binditem.protect.*:
+        description: "Plugin all permissions about protect."
+        default: op
+        children:
+          binditem.protect.bindingitemprotect:
+            description: "Keep binding items in inventory on death."
+            default: true
 
 

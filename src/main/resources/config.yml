@@ -1,6 +1,18 @@
 # 在启动时从记录里移除所有以绑定物品数为0的玩家记录
+# Remove not have binding items player's record from database on startup.
 removeNonBindPlayerOnStartUp: true
 # 禁用数字键快捷切换
+# Ban number key hot bar swap
 disableHotBarSwap: true
 # 禁止玩家丢弃已经绑定了的物品
+# Deny players to drop items that are is binding.
 denyPlayerDropBindingItems: true
+# 接管死亡掉落(需重启)
+# Take over death drop(restart need).
+takeOverDeathDrop: true
+# 让有权限的玩家的绑定物品死亡不掉落(需要启用接管死亡掉落)
+# Let binding item in death player inventory not drop(Need enable "Take over death drop" first).
+keepBindingItemsOnDeath: true
+# 让死亡的玩家身上的不是他的物品死亡不掉落(需要启用接管死亡掉落)
+# When player death not drop items binding to other player(Need enable "Take over death drop" first).
+keepItemsNotTheirsOnDeath: true

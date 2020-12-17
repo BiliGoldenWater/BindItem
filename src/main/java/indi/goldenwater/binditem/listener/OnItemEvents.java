@@ -30,7 +30,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -41,7 +40,7 @@ import org.bukkit.util.Vector;
 import java.util.List;
 
 public class OnItemEvents implements Listener {
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onPlayerPickupItemEvent(PlayerPickupItemEvent event){
         List<String> bindType = ItemBindAndUnbind.bindType(event.getItem().getItemStack());
         Player player = event.getPlayer();
@@ -63,7 +62,7 @@ public class OnItemEvents implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onPlayerItemHeldEvent(PlayerItemHeldEvent event){
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItem(event.getNewSlot());
@@ -83,7 +82,7 @@ public class OnItemEvents implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onPlayerInteractEvent(PlayerInteractEvent event){
         Player player = event.getPlayer();
         ItemStack item = player.getItemInHand();
@@ -97,13 +96,16 @@ public class OnItemEvents implements Listener {
                     event.setCancelled(true);
                 }
                 break;
+            case "bindOnUse":
+                ItemBindAndUnbind.bind(player.getName(), item);
+                break;
             case "needRemove":
                 item.removeEnchantment(Enchantment.getByName("bind_item"));
                 break;
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event){
         Player player = event.getPlayer();
         ItemStack item = player.getItemInHand();
@@ -123,11 +125,8 @@ public class OnItemEvents implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onInventoryClickEvent(InventoryClickEvent event){
-        Player player = (Player) event.getWhoClicked();
-        ItemStack item = event.getCurrentItem();
-
         if(event.getClick().isKeyboardClick()){
             switch (event.getAction()){
                 case HOTBAR_SWAP:
@@ -140,6 +139,9 @@ public class OnItemEvents implements Listener {
                     return;
             }
         }
+
+        Player player = (Player) event.getWhoClicked();
+        ItemStack item = event.getCurrentItem();
 
         if(item==null || item.getType() == Material.AIR) return;
         List<String> bindType = ItemBindAndUnbind.bindType(item);
@@ -157,7 +159,7 @@ public class OnItemEvents implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event){
         if(event.getDamager().getType() != EntityType.PLAYER) return;
 
@@ -181,9 +183,12 @@ public class OnItemEvents implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public static void onPlayerDropItemEvent(PlayerDropItemEvent event){
         Player player = event.getPlayer();
+
+        if(player.getHealth()==0.0) return;
+
         ItemStack item = event.getItemDrop().getItemStack();
         if(item==null || item.getType() == Material.AIR) return;
         List<String> bindType = ItemBindAndUnbind.bindType(item);
