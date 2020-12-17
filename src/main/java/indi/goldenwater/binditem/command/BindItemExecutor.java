@@ -24,19 +24,21 @@
 package indi.goldenwater.binditem.command;
 
 import indi.goldenwater.binditem.BindItem;
+import indi.goldenwater.binditem.listener.OnItemEvents;
 import indi.goldenwater.binditem.module.CheckPermissions;
 import indi.goldenwater.binditem.module.ItemBindAndUnbind;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.bukkit.Bukkit.*;
+import static org.bukkit.Bukkit.getServer;
 
 public class BindItemExecutor {
     public static void registerCommandBindItem(BindItem plugin){
@@ -102,6 +104,12 @@ public class BindItemExecutor {
                     case "bindonequip":
                         if(CheckPermissions.hasPermission_Tips(sender,"binditem.commands.bindonequip")){
                             sender.sendMessage("Unfinished.");
+                        }
+                        return true;
+                    case "reload":
+                        if(CheckPermissions.hasPermission_Tips(sender,"binditem.commands.reload")){
+                            BindItem.getInstance().reloadConfig();
+                            sender.sendMessage("Configuration reload finished.");
                         }
                         return true;
                 }

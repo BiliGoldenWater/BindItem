@@ -1,2 +1,6 @@
 # 在启动时从记录里移除所有以绑定物品数为0的玩家记录
 removeNonBindPlayerOnStartUp: true
+# 禁用数字键快捷切换
+disableHotBarSwap: true
+# 禁止玩家丢弃已经绑定了的物品
+denyPlayerDropBindingItems: true

@@ -25,7 +25,7 @@ package indi.goldenwater.binditem;
 
 import indi.goldenwater.binditem.command.BindItemExecutor;
 import indi.goldenwater.binditem.enchant.RegisterEnchantBindItem;
-import indi.goldenwater.binditem.listener.OnPlayerPickupItemEvent;
+import indi.goldenwater.binditem.listener.OnItemEvents;
 import indi.goldenwater.binditem.module.DBOperator;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,7 +55,7 @@ public final class BindItem extends JavaPlugin {
 
         enchantLvlDatabase = new DBOperator(pluginPath + "data.db");
 
-        getServer().getPluginManager().registerEvents(new OnPlayerPickupItemEvent(), this);
+        getServer().getPluginManager().registerEvents(new OnItemEvents(), this);
 
         getLogger().info("init database.");
         initEnchantLvlDatabase(enchantLvlDatabase);
